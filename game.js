@@ -21,8 +21,37 @@ redBubbleBtn.addEventListener('click', () => {
 
 });
 
+blueBubbleBtn.addEventListener('click', () => {
+    let blueBubble = new BlueBubble(cauldron.x,cauldron.y,"blue");
+    cauldron.bubbles.push(blueBubble);
+    blueBubble.body.classList.add('blueBubble');
+    addNewElement(blueBubble);
 
+});
 
+bombBubbleBtn.addEventListener('click', () => {
+    let bombBubble = new BombBubble(cauldron.x,cauldron.y,"grey");
+    cauldron.bubbles.push(bombBubble);
+    bombBubble.body.classList.add('bombBubble');
+    addNewElement(bombBubble);
+
+});
+
+nitroBubbleBtn.addEventListener('click', () => {
+    let nitroBubble = new NitroBubble(cauldron.x,cauldron.y,"yellow");
+    cauldron.bubbles.push(nitroBubble);
+    nitroBubble.body.classList.add('nitroBubble');
+    addNewElement(nitroBubble);
+
+});
+
+specialBubbleBtn.addEventListener('click', () => {
+    let specialBubble = new SpecialBubble(cauldron.x,cauldron.y,"green");
+    cauldron.bubbles.push(specialBubble);
+    specialBubble.body.classList.add('specialBubble');
+    addNewElement(specialBubble);
+
+});
 
 function addNewElement(element){
     gameElement.append(element.body);

@@ -16,8 +16,7 @@ class Bubble {
     }
 
     move() {
-        const randomX = Math.random() * 40 - 20; // Número aleatorio entre -5 y 5
-        // const randomY = Math.random() * 10 - 5; // Número aleatorio entre -5 y 5
+        const randomX = Math.random() * 40 - 20; 
         this.x += randomX;
         this.y--;
         this.body.style.left = `${this.x}px`;

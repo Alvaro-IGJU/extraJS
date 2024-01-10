@@ -4,8 +4,10 @@ class Bubble {
         this.y = y;
         this.body = document.createElement('div');
         this.body.classList.add('bubble');
+        console.log(this.constructor.name)
+
         this.body.addEventListener("click",()=>{
-               this.destroy();
+               this.destroy();              
         })
     }
 
@@ -25,17 +27,48 @@ class Bubble {
 }
 
 class RedBubble extends Bubble {
+    static pressedKey = null;
+    static tempKey = null;
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
         this.body.style.backgroundColor = color;
+        this.body.addEventListener("click", (event) => {
+            if (RedBubble.tempKey) {
+               RedBubble.pressedKey = RedBubble.tempKey;
+               redBubbleBtn.textContent = RedBubble.pressedKey;
+            } 
+            addPoint();
+            
+        });
+
+        this.body.addEventListener("contextmenu", (event) => {
+            event.preventDefault();
+            this.destroy();
+            substractPoint();
+        });
+
+        
     }
 }
 
 class BlueBubble extends Bubble {
+    static pressedKey = null;
+    static tempKey = null;
+
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
+        this.body.addEventListener("click",()=>{
+            this.destroy();
+            substractPoint()
+
+     })
+        this.body.addEventListener("contextmenu",(e)=>{
+            e.preventDefault();
+            this.destroy();
+            addPoint();
+     })
         this.body.style.backgroundColor = color;
     }
 }
@@ -53,6 +86,15 @@ class NitroBubble extends Bubble {
         super(x, y);
         this.color = color;
         this.body.style.backgroundColor = color;
+        this.body.addEventListener("click",()=>{
+            addPoint();              
+     })
+     this.body.addEventListener("contextmenu",(e)=>{
+        e.preventDefault();
+        this.destroy();
+        //Resta un punto 
+        substractPoint()
+ })
     }
 }
 
@@ -61,5 +103,14 @@ class SpecialBubble extends Bubble {
         super(x, y);
         this.color = color;
         this.body.style.backgroundColor = color;
+        this.body.addEventListener("click",()=>{
+            addPoint();              
+     })
+     this.body.addEventListener("contextmenu",(e)=>{
+        e.preventDefault();
+        this.destroy();
+        //Resta un punto 
+        substractPoint()
+ })
     }
 }

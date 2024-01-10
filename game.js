@@ -1,3 +1,5 @@
+let playerPoints = 0;
+
 const redBubbleBtn = document.getElementById("redBubbleBtn");
 const blueBubbleBtn = document.getElementById("blueBubbleBtn");
 const bombBubbleBtn = document.getElementById("bombBubbleBtn");
@@ -12,6 +14,10 @@ const cauldron = new Cauldron(gameWidth / 2, gameHeight);
 
 addNewElement(cauldron);
 
+
+addEventListener("keypress", ()=>{
+
+})
 
 redBubbleBtn.addEventListener('click', () => {
     let redBubble = new RedBubble(cauldron.x,cauldron.y,"red");
@@ -53,6 +59,19 @@ specialBubbleBtn.addEventListener('click', () => {
 
 });
 
+addEventListener("keydown", (event) => {
+    RedBubble.tempKey = event.key;
+    BlueBubble.tempKey = event.key;
+    
+    if(RedBubble.pressedKey == RedBubble.tempKey){
+        destroyBubbles();
+    }
+});
+
+addEventListener("keyup", () => {
+    RedBubble.tempKey = null;
+});
+
 function addNewElement(element){
     gameElement.append(element.body);
     element.body.style.position = 'absolute';
@@ -60,8 +79,25 @@ function addNewElement(element){
     element.body.style.top = `${cauldron.y}px`; 
 }
 
+function addPoint(points = 1){
+    playerPoints+=points;
+    document.getElementById("points").textContent = playerPoints;
+}
+function substractPoint(points = 1){
+    playerPoints-=1;
+    document.getElementById("points").textContent = playerPoints;
+}
+
+function destroyBubbles(){
+    cauldron.bubbles.forEach((b)=>{
+        if(b.constructor.name != "BlueBubble"){
+            b.destroy();
+        }
+    })
+}
+
 const intervalo = setInterval(()=>{
     cauldron.bubbles.forEach((b)=>{
         b.move();
     });
-}, 100); // 2000 milisegundos = 2 segundos
+}, 100); 

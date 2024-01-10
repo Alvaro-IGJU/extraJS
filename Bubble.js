@@ -2,9 +2,12 @@ class Bubble {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        let nums = [50, 100, 120];
+        let size = nums[Math.floor(Math.random() * nums.length)];
         this.body = document.createElement('div');
         this.body.classList.add('bubble');
-        console.log(this.constructor.name)
+        this.body.style.height = `${size}px`;
+        this.body.style.width = `${size}px`;
 
         this.body.addEventListener("click",()=>{
                this.destroy();              
@@ -12,13 +15,17 @@ class Bubble {
     }
 
     destroy() {
-        if (this.body && this.body.parentNode) {
-            this.body.parentNode.removeChild(this.body);
-        }
+        //this.body.parentNode.removeChild(this.body);
+        this.body.remove();
+        let index = cauldron.bubbles.indexOf(this);
+        cauldron.bubbles.splice(index, 1);
+       
+        
+        
     }
 
     move() {
-        const randomX = Math.random() * 40 - 20; 
+        const randomX = Math.random() * 20 - 10; 
         this.x += randomX;
         this.y--;
         this.body.style.left = `${this.x}px`;
@@ -27,17 +34,13 @@ class Bubble {
 }
 
 class RedBubble extends Bubble {
-    static pressedKey = null;
-    static tempKey = null;
+
     constructor(x, y, color) {
         super(x, y);
         this.color = color;
         this.body.style.backgroundColor = color;
         this.body.addEventListener("click", (event) => {
-            if (RedBubble.tempKey) {
-               RedBubble.pressedKey = RedBubble.tempKey;
-               redBubbleBtn.textContent = RedBubble.pressedKey;
-            } 
+          
             addPoint();
             
         });
@@ -53,8 +56,7 @@ class RedBubble extends Bubble {
 }
 
 class BlueBubble extends Bubble {
-    static pressedKey = null;
-    static tempKey = null;
+
 
     constructor(x, y, color) {
         super(x, y);
@@ -78,6 +80,23 @@ class BombBubble extends Bubble {
         super(x, y);
         this.color = color;
         this.body.style.backgroundColor = color;
+       
+    }
+
+    destroy() {
+        let index = cauldron.bubbles.indexOf(this);
+        
+            
+            if(cauldron.bubbles[index -1])
+            cauldron.bubbles[index -1].destroy();
+        
+           
+            if(cauldron.bubbles[index])
+            cauldron.bubbles[index].destroy();
+            super.destroy();
+            
+
+            
     }
 }
 

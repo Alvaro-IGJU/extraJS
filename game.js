@@ -59,24 +59,13 @@ specialBubbleBtn.addEventListener('click', () => {
 
 });
 
-addEventListener("keydown", (event) => {
-    RedBubble.tempKey = event.key;
-    BlueBubble.tempKey = event.key;
-    
-    if(RedBubble.pressedKey == RedBubble.tempKey){
-        destroyBubbles();
-    }
-});
-
-addEventListener("keyup", () => {
-    RedBubble.tempKey = null;
-});
 
 function addNewElement(element){
     gameElement.append(element.body);
     element.body.style.position = 'absolute';
     element.body.style.left = `${cauldron.x}px`; 
     element.body.style.top = `${cauldron.y}px`; 
+
 }
 
 function addPoint(points = 1){
@@ -100,4 +89,5 @@ const intervalo = setInterval(()=>{
     cauldron.bubbles.forEach((b)=>{
         b.move();
     });
+    console.log(cauldron.bubbles)
 }, 100); 

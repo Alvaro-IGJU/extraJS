@@ -3,7 +3,7 @@ let playerPoints = 0;
 const redBubbleBtn = document.getElementById("redBubbleBtn");
 const blueBubbleBtn = document.getElementById("blueBubbleBtn");
 const bombBubbleBtn = document.getElementById("bombBubbleBtn");
-const nitroBubbleBtn = document.getElementById("nitroBubbleBtn");
+const boosterBubbleBtn = document.getElementById("boosterBubbleBtn");
 const specialBubbleBtn = document.getElementById("specialBubbleBtn");
 
 const gameElement = document.getElementById('game');
@@ -16,7 +16,7 @@ addNewElement(cauldron);
 
 
 addEventListener("keypress", ()=>{
-
+    
 })
 
 redBubbleBtn.addEventListener('click', () => {
@@ -24,7 +24,7 @@ redBubbleBtn.addEventListener('click', () => {
     cauldron.bubbles.push(redBubble);
     redBubble.body.classList.add('redBubble');
     addNewElement(redBubble);
-
+    
 });
 
 blueBubbleBtn.addEventListener('click', () => {
@@ -32,7 +32,7 @@ blueBubbleBtn.addEventListener('click', () => {
     cauldron.bubbles.push(blueBubble);
     blueBubble.body.classList.add('blueBubble');
     addNewElement(blueBubble);
-
+    
 });
 
 bombBubbleBtn.addEventListener('click', () => {
@@ -40,15 +40,15 @@ bombBubbleBtn.addEventListener('click', () => {
     cauldron.bubbles.push(bombBubble);
     bombBubble.body.classList.add('bombBubble');
     addNewElement(bombBubble);
-
+    
 });
 
-nitroBubbleBtn.addEventListener('click', () => {
-    let nitroBubble = new NitroBubble(cauldron.x,cauldron.y,"yellow");
-    cauldron.bubbles.push(nitroBubble);
-    nitroBubble.body.classList.add('nitroBubble');
-    addNewElement(nitroBubble);
-
+boosterBubbleBtn.addEventListener('click', () => {
+    let boosterBubble = new BoosterBubble(cauldron.x,cauldron.y,"yellow");
+    cauldron.bubbles.push(boosterBubble);
+    boosterBubble.body.classList.add('boosterBubble');
+    addNewElement(boosterBubble);
+    
 });
 
 specialBubbleBtn.addEventListener('click', () => {
@@ -56,7 +56,7 @@ specialBubbleBtn.addEventListener('click', () => {
     cauldron.bubbles.push(specialBubble);
     specialBubble.body.classList.add('specialBubble');
     addNewElement(specialBubble);
-
+    
 });
 
 
@@ -65,11 +65,11 @@ function addNewElement(element){
     element.body.style.position = 'absolute';
     element.body.style.left = `${cauldron.x}px`; 
     element.body.style.top = `${cauldron.y}px`; 
-
+    
 }
 
 function addPoint(points = 1){
-    playerPoints+=points;
+    playerPoints += points*Bubble.booster;
     document.getElementById("points").textContent = playerPoints;
 }
 function substractPoint(points = 1){
@@ -89,5 +89,5 @@ const intervalo = setInterval(()=>{
     cauldron.bubbles.forEach((b)=>{
         b.move();
     });
-    console.log(cauldron.bubbles)
+    console.log(Bubble.booster)
 }, 100); 

@@ -1,5 +1,6 @@
 let playerPoints = 0;
 let destroyBubblesKey = null;
+let destroyBlueBubblesKey = null;
 let tempKey = null;
 
 const redBubbleBtn = document.getElementById("redBubbleBtn");
@@ -36,11 +37,15 @@ redBubbleBtn.addEventListener('click', () => {
 });
 
 blueBubbleBtn.addEventListener('click', () => {
-    let blueBubble = new BlueBubble(cauldron.x, cauldron.y, "blue");
-    cauldron.bubbles.push(blueBubble);
-    blueBubble.body.classList.add('blueBubble');
-    addNewElement(blueBubble);
-
+    if (tempKey != null) { 
+        destroyBlueBubblesKey = tempKey;
+        blueBubbleBtn.textContent = tempKey;
+    } else {
+        let blueBubble = new BlueBubble(cauldron.x, cauldron.y, "blue");
+        cauldron.bubbles.push(blueBubble);
+        blueBubble.body.classList.add('blueBubble');
+        addNewElement(blueBubble);
+    }
 });
 
 bombBubbleBtn.addEventListener('click', () => {
@@ -85,13 +90,22 @@ function substractPoint(points = 1) {
     document.getElementById("points").textContent = playerPoints;
 }
 
-function destroyBubbles() {
-    cauldron.bubbles.forEach((b) => {
-        console.log(b.constructor.name)
-        if (b.constructor.name != "BlueBubble") {
-            b.destroy();
+function destroyBubbles(onlyBlues = false) {
+
+    for (let i = 0; i < cauldron.bubbles.length; i++) {
+        if (!onlyBlues && cauldron.bubbles[i].constructor.name != "BlueBubble") {
+            cauldron.bubbles[i].destroy();
+            i--;
+        } else {
+            if (onlyBlues && cauldron.bubbles[i].constructor.name == "BlueBubble") {
+                cauldron.bubbles[i].destroy();
+                i--;
+            }
         }
-    })
+
+
+    }
+
 }
 
 function generateRandomBubble(object) {
@@ -142,9 +156,10 @@ const intervalo = setInterval(() => {
 
 document.addEventListener("keydown", function (event) {
     tempKey = event.key;
-    if(destroyBubblesKey == tempKey){
+    if (destroyBubblesKey == tempKey) {
         destroyBubbles();
-        console.log("DES")
+    }else if(destroyBlueBubblesKey == tempKey){
+        destroyBubbles(true);
     }
 });
 
